@@ -4,6 +4,7 @@
 #include <sstream>
 #include <string>
 #include <cmath>
+#include <vector>
 
 using namespace std;
 
@@ -93,6 +94,21 @@ int main() {
         BST<int> empty;
         auto spined = spine(empty);
         assert(spined.empty());
+    }
+
+    // fold on empty tree
+    {
+        BST<int> empty;
+        auto res = empty.fold(5, [](int, int const &) {return 2345;});
+        assert(res == 5);
+    }
+
+    // and non empty
+    {
+        BST<int> bst({1, 5, 6, 9, 3, 6});
+        vector<int> v, expected({1, 3, 5, 6, 6, 9});
+        bst.fold(0, [&](const int, const int& val) { v.push_back(val); return 1; });
+        assert(v == expected);
     }
 
     return 0;
