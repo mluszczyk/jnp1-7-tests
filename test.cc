@@ -7,11 +7,19 @@
 #include <forward_list>
 using namespace std;
 
+void trimLastZero(std::string& s) {
+    if (!s.empty() && s.back() == ' ') {
+        s.pop_back();
+    }
+}
+
 template <typename T>
 void assertEQ(const BST<T>& bst, const string &s) {
     stringstream ss;
     ss << bst;
-    assert(ss.str() == s);
+    string actual = ss.str();
+    trimLastZero(actual);
+    assert(actual == s);
 }
 
 #define assertThrow(OP) { \
